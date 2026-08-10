@@ -1,10 +1,10 @@
-import { FormEvent, useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import type { FormEvent } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavBar() {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
-  const location = useLocation();
 
 //   re-checks after navigation, such as login -> /home
 const isLoggedIn = Boolean(localStorage.getItem("token"))
@@ -32,6 +32,7 @@ function handleSearch(event: FormEvent<HTMLFormElement>) {
                 <Link to="/home">Home</Link>{" | "}
 
                 <Link to="/random">Random Cocktail</Link>{" | "}
+                <Link to="/post">Post Cocktail</Link>{" | "}
 
                  <form onSubmit={handleSearch} style={{ display: "inline" }}>
                  <input

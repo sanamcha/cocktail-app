@@ -7,6 +7,7 @@ import Register from "./Register";
 import Cocktails from "./Cocktails";
 import RandomCocktail from "./RandomCocktail";
 import Search from "./Search";
+import CreateCocktail from "./CreateCocktail";
 
 
 function ProtectedRoute({ children }: {children: React.ReactNode }){
@@ -42,7 +43,12 @@ function App() {
                 <Search />
               </ProtectedRoute>
              }
-      />       
+      />
+      <Route path="/post" element={
+        <ProtectedRoute>
+          <CreateCocktail />
+        </ProtectedRoute>
+      } />       
     </Routes>
       
     </BrowserRouter>
