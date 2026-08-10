@@ -1,3 +1,7 @@
+server run: npm start
+
+
+
 <!-- basic structure -->
 
 server/

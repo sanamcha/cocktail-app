@@ -1,3 +1,7 @@
+client/server run: npm run dev
+ Local:   http://localhost:5173/
+
+
 # React + TypeScript + Vite
 
 cocktail-app/
