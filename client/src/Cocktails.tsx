@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 
+type Cocktail = {
+  id: number;
+  name: string;
+  category: string | null;
+  alcoholic: string | null;
+  image_url?: string | null;
+};
+
 function Cocktails() {
-  const [cocktails, setCocktails] = useState([]);
+  const [cocktails, setCocktails] = useState<Cocktail[]>([]);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
@@ -9,14 +17,11 @@ function Cocktails() {
       const token = localStorage.getItem("token");
 
       try {
-        const response = await fetch(
-          "http://localhost:3000/api/cocktails",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
-        );
+        const response = await fetch("http://localhost:3000/api/cocktails", {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
 
         const data = await response.json();
 
