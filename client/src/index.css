@@ -95,6 +95,254 @@ p {
   margin: 0;
 }
 
+.cocktail-page {
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.cocktail-page__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.logout-button {
+  border: none;
+  border-radius: 10px;
+  background: #7c3aed;
+  color: white;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.cocktail-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.cocktail-card {
+  background: #f8f1e7;
+  border: 1px solid #e8dcc8;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  color: #1f2937;
+}
+
+.cocktail-card__image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.cocktail-card__content {
+  padding: 16px;
+  text-align: left;
+  color: #1f2937;
+}
+
+.cocktail-card__content h2,
+.cocktail-card__content h3 {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+  color: #111827;
+  font-weight: 700;
+}
+
+.cocktail-card__content p {
+  margin-bottom: 6px;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.delete-cocktail-button,
+.save-cocktail-button,
+.cancel-cocktail-button,
+.edit-cocktail-button {
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  min-width: 90px;
+  min-height: 38px;
+  padding: 8px 12px;
+}
+
+.edit-cocktail-button {
+  background: #f59e0b;
+  color: white;
+}
+
+.delete-cocktail-button {
+  background: #dc2626;
+  color: #fff;
+}
+
+.save-cocktail-button {
+  background: #16a34a;
+  color: white;
+  padding: 8px 12px;
+}
+
+.cancel-cocktail-button {
+  background: #e5e7eb;
+  color: #374151;
+  padding: 8px 12px;
+}
+
+.card-actions,
+.card-footer-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.cocktail-card {
+  position: relative;
+}
+
+.cocktail-card__content input,
+.cocktail-card__content textarea {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.cocktail-inline-list {
+  margin: 8px 0 0 18px;
+  padding-left: 0;
+  color: #374151;
+}
+
+.cocktail-inline-list li {
+  margin-bottom: 4px;
+}
+
+.cocktail-card__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.post-cocktail-layout {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 32px;
+  align-items: start;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.post-cocktail-form {
+  background: #f8f1e7;
+  border: 1px solid #e8dcc8;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow);
+  text-align: left;
+}
+
+.post-cocktail-form label {
+  display: block;
+  margin-bottom: 16px;
+  color: #374151;
+  font-weight: 600;
+}
+
+.post-cocktail-form input,
+.post-cocktail-form textarea,
+.cocktail-card__content textarea,
+.cocktail-card__content input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.post-cocktail-form textarea,
+.cocktail-card__content textarea {
+  resize: vertical;
+}
+
+.post-cocktail-form button {
+  margin-top: 8px;
+  border: none;
+  border-radius: 10px;
+  background: #7c3aed;
+  color: white;
+  font-weight: 700;
+  padding: 12px 18px;
+  cursor: pointer;
+}
+
+.post-cocktail-list {
+  width: 100%;
+}
+
+.post-cocktail-list .cocktail-grid {
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+}
+
+@media (max-width: 900px) {
+  .post-cocktail-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .post-cocktail-list .cocktail-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .post-cocktail-list .cocktail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cocktail-grid {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .cocktail-grid {
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .cocktail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cocktail-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 code,
 .counter {
   font-family: var(--mono);

@@ -5,7 +5,10 @@ import NavBar from "./NavBar";
 import Login from "./Login";
 import Register from "./Register";
 import Cocktails from "./Cocktails";
+import CocktailDetails from "./CocktailDetails";
 import RandomCocktail from "./RandomCocktail";
+import PostCocktail from "./PostCocktail";
+import PostCocktailDetails from "./PostCocktailDetails";
 import Search from "./Search";
 
 
@@ -30,12 +33,30 @@ function App() {
               </ProtectedRoute>
           }
         />
+      <Route path="/cocktails/:id" element={
+              <ProtectedRoute>
+                <CocktailDetails />
+              </ProtectedRoute>
+      }
+      />
       <Route path="/random" element={
               <ProtectedRoute>
                 <RandomCocktail />
               </ProtectedRoute>
       }
       />  
+      <Route path="/post" element={
+              <ProtectedRoute>
+                <PostCocktail />
+              </ProtectedRoute>
+      }
+      />
+      <Route path="/postdetails/:id" element={
+              <ProtectedRoute>
+                <PostCocktailDetails />
+              </ProtectedRoute>
+      }
+      />
       <Route path="/search" 
              element = {
               <ProtectedRoute>

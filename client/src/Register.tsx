@@ -1,6 +1,5 @@
+import { type FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-
 
 function Register() {
   const navigate = useNavigate();
@@ -9,7 +8,7 @@ function Register() {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  async function handleRegister(event) {
+  async function handleRegister(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setMessage("");
 
@@ -94,7 +93,7 @@ function Register() {
             value={password}
             onChange={(event) => setPassword(event.target.value)}
             placeholder="At least 8 characters"
-            minLength="8"
+            minLength={8}
             required
           />
         </div>

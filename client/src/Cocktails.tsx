@@ -1,33 +1,50 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+type Cocktail = {
+  id: number | string;
+  name: string;
+  category: string;
+  alcoholic: string;
+  image_url?: string;
+};
+
+type ApiDrink = {
+  idDrink: string;
+  strDrink: string;
+  strDrinkThumb: string;
+};
 
 function Cocktails() {
-  const [cocktails, setCocktails] = useState([]);
+  const [cocktails, setCocktails] = useState<Cocktail[]>([]);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getCocktails() {
-      const token = localStorage.getItem("token");
-
       try {
         const response = await fetch(
-          "http://localhost:3000/api/cocktails",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          }
+          "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Cocktail"
         );
 
-        const data = await response.json();
-
         if (!response.ok) {
-          setMessage(data.message || "Cannot load cocktails");
-          return;
+          throw new Error("Failed to fetch cocktails");
         }
 
-        setCocktails(data);
+        const data = await response.json();
+        const drinks: ApiDrink[] = Array.isArray(data.drinks) ? data.drinks : [];
+
+        const mappedCocktails: Cocktail[] = drinks.slice(0, 20).map((drink) => ({
+          id: drink.idDrink,
+          name: drink.strDrink,
+          category: "Cocktail",
+          alcoholic: "Mixed",
+          image_url: drink.strDrinkThumb,
+        }));
+
+        setCocktails(mappedCocktails);
       } catch {
-        setMessage("Cannot connect to backend");
+        setMessage("Cannot connect to CocktailDB");
       }
     }
 
@@ -40,22 +57,37 @@ function Cocktails() {
   }
 
   return (
-    <main>
-      <h1>Cocktail List</h1>
-      <button onClick={logout}>Logout</button>
+    <main className="cocktail-page">
+      <div className="cocktail-page__header">
+        <h1>Cocktail List</h1>
+        <button className="logout-button" onClick={logout}>Logout</button>
+      </div>
 
       {message && <p>{message}</p>}
 
-      {cocktails.map((cocktail) => (
-        <article key={cocktail.id}>
-          <h2>{cocktail.name}</h2>
-          <p>Category: {cocktail.category}</p>
-          <p>Type: {cocktail.alcoholic}</p>
-          {cocktail.image_url && (
-            <img src={cocktail.image_url} alt={cocktail.name} width="150" />
-          )}
-        </article>
-      ))}
+      <section className="cocktail-grid">
+        {cocktails.map((cocktail) => (
+          <article
+            key={cocktail.id}
+            className="cocktail-card"
+            onClick={() => navigate(`/cocktails/${cocktail.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            {cocktail.image_url && (
+              <img
+                src={cocktail.image_url}
+                alt={cocktail.name}
+                className="cocktail-card__image"
+              />
+            )}
+            <div className="cocktail-card__content">
+              <h2>{cocktail.name}</h2>
+              <p>Category: {cocktail.category}</p>
+              <p>Type: {cocktail.alcoholic}</p>
+            </div>
+          </article>
+        ))}
+      </section>
     </main>
   );
 }

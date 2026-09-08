@@ -1,17 +1,14 @@
-import { useState } from "react";
+import { type FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Register from "./Register";
 
-
-function Login({onLogin}) {
+function Login({ onLogin }: { onLogin?: () => void }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-
   const navigate = useNavigate();
 
-  async function handleLogin(event) {
+  async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const response = await fetch("http://localhost:3000/api/auth/login", {
@@ -33,9 +30,8 @@ function Login({onLogin}) {
     }
 
     localStorage.setItem("token", data.token);
-    // setMessage("Login successful!");
-    // onLogin();
-    navigate("/home")
+    onLogin?.();
+    navigate("/home");
 
     // Later, redirect to the home page here.
     // window.location.href = "/";
