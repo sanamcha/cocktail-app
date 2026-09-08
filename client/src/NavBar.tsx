@@ -32,6 +32,8 @@ function NavBar() {
 
                 <Link to="/post">Post Cocktail</Link>{" | "}
 
+                <Link to="/favorites">Favorites</Link>{" | "}
+
                  <form onSubmit={handleSearch} style={{ display: "inline" }}>
                  <input
                      type="search"

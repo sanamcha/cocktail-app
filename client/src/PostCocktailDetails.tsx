@@ -21,7 +21,6 @@ type PostCocktailDetail = {
 
 type Review = {
   id: string;
-  rating?: number;
   comment: string | null;
   user_name: string;
   created_at: string;
@@ -91,7 +90,7 @@ function PostCocktailDetails() {
 
         setCocktail(cocktailData);
 
-        const reviewsResponse = await fetch(`http://localhost:3000/api/reviews/cocktail/${id}`, {
+        const reviewsResponse = await fetch(`http://localhost:3000/api/comments/cocktail/${id}`, {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
           },
@@ -130,14 +129,13 @@ function PostCocktailDetails() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:3000/api/reviews/cocktail/${id}`, {
+      const response = await fetch(`http://localhost:3000/api/comments/cocktail/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
         body: JSON.stringify({
-          rating: 5,
           comment: trimmedComment,
         }),
       });
@@ -151,7 +149,6 @@ function PostCocktailDetails() {
       setReviews((current) => [
         {
           id: data.id,
-          rating: data.rating ?? 5,
           comment: data.comment,
           user_name: "You",
           created_at: new Date().toISOString(),
@@ -178,14 +175,13 @@ function PostCocktailDetails() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:3000/api/reviews/${reviewId}`, {
+      const response = await fetch(`http://localhost:3000/api/comments/${reviewId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: token ? `Bearer ${token}` : "",
         },
         body: JSON.stringify({
-          rating: 5,
           comment: reviewDraft.comment.trim(),
         }),
       });
@@ -201,7 +197,6 @@ function PostCocktailDetails() {
           review.id === reviewId
             ? {
                 ...review,
-                rating: data.rating ?? 5,
                 comment: data.comment,
               }
             : review
@@ -221,7 +216,7 @@ function PostCocktailDetails() {
     const token = localStorage.getItem("token");
 
     try {
-      const response = await fetch(`http://localhost:3000/api/reviews/${reviewId}`, {
+      const response = await fetch(`http://localhost:3000/api/comments/${reviewId}`, {
         method: "DELETE",
         headers: {
           Authorization: token ? `Bearer ${token}` : "",

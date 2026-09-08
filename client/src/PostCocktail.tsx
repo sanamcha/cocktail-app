@@ -59,6 +59,7 @@ function PostCocktail() {
   const [ingredients, setIngredients] = useState("");
   const [instructions, setInstructions] = useState("");
   const [cocktails, setCocktails] = useState<Cocktail[]>([]);
+  const [likedCocktailIds, setLikedCocktailIds] = useState<number[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<EditForm>({
     name: "",
@@ -94,7 +95,30 @@ function PostCocktail() {
       }
     }
 
+    async function getLikedCocktails() {
+      const token = localStorage.getItem("token");
+
+      try {
+        const response = await fetch("http://localhost:3000/api/likes", {
+          headers: {
+            Authorization: token ? `Bearer ${token}` : "",
+          },
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          return;
+        }
+
+        setLikedCocktailIds(data.map((like: { cocktail_id: number }) => like.cocktail_id));
+      } catch {
+        // ignore missing likes data
+      }
+    }
+
     getCocktails();
+    getLikedCocktails();
   }, []);
 
   async function handleSubmit(event: React.FormEvent) {
@@ -161,7 +185,38 @@ function PostCocktail() {
       }
 
       setCocktails((current) => current.filter((cocktail) => cocktail.id !== cocktailId));
+      setLikedCocktailIds((current) => current.filter((id) => id !== cocktailId));
       setMessage("Cocktail deleted successfully");
+    } catch {
+      setMessage("Cannot connect to backend");
+    }
+  }
+
+  async function toggleLike(cocktailId: number) {
+    const token = localStorage.getItem("token");
+
+    const isLiked = likedCocktailIds.includes(cocktailId);
+
+    try {
+      const response = await fetch(`http://localhost:3000/api/likes/${cocktailId}`, {
+        method: isLiked ? "DELETE" : "POST",
+        headers: {
+          Authorization: token ? `Bearer ${token}` : "",
+        },
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setMessage(data.message || "Unable to update like");
+        return;
+      }
+
+      setLikedCocktailIds((current) =>
+        isLiked ? current.filter((id) => id !== cocktailId) : [...current, cocktailId]
+      );
+
+      setMessage(isLiked ? "Like removed" : "Cocktail liked");
     } catch {
       setMessage("Cannot connect to backend");
     }
@@ -439,6 +494,30 @@ function PostCocktail() {
                               }}
                             >
                               Edit
+                            </button>
+                            <button
+                              type="button"
+                              className="btn btn-link p-0"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                toggleLike(cocktail.id);
+                              }}
+                              aria-label={likedCocktailIds.includes(cocktail.id) ? "Unlike cocktail" : "Like cocktail"}
+                              title={likedCocktailIds.includes(cocktail.id) ? "Unlike" : "Like"}
+                              style={{
+                                color: likedCocktailIds.includes(cocktail.id) ? "#0d6efd" : "#6c757d",
+                                fontSize: "1.5rem",
+                                lineHeight: 1,
+                              }}
+                            >
+                              <i
+                                className={`bi ${
+                                  likedCocktailIds.includes(cocktail.id)
+                                    ? "bi-hand-thumbs-up-fill"
+                                    : "bi-hand-thumbs-up"
+                                }`}
+                                aria-hidden="true"
+                              ></i>
                             </button>
                           </div>
                         </>

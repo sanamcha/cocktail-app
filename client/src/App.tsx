@@ -9,6 +9,7 @@ import CocktailDetails from "./CocktailDetails";
 import RandomCocktail from "./RandomCocktail";
 import PostCocktail from "./PostCocktail";
 import PostCocktailDetails from "./PostCocktailDetails";
+import PostFavorites from "./PostFavorites";
 import Search from "./Search";
 
 
@@ -54,6 +55,12 @@ function App() {
       <Route path="/postdetails/:id" element={
               <ProtectedRoute>
                 <PostCocktailDetails />
+              </ProtectedRoute>
+      }
+      />
+      <Route path="/favorites" element={
+              <ProtectedRoute>
+                <PostFavorites />
               </ProtectedRoute>
       }
       />
