@@ -265,7 +265,7 @@ function PostCocktailDetails() {
   return (
     <main style={{ padding: 24, maxWidth: 1100, margin: "0 auto" }}>
       <div style={{ marginBottom: 20 }}>
-        <button type="button" onClick={() => navigate("/post")}>
+        <button type="button" onClick={() => navigate("/post")} className="btn btn-primary">
           Back to Post page
         </button>
       </div>

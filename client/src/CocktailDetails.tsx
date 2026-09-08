@@ -61,9 +61,11 @@ function CocktailDetails() {
 
   if (error || !cocktail) {
     return (
-      <main style={{ padding: 24 }}>
+      <main className="cocktail-details-page">
         <h2>{error || "Cocktail not found."}</h2>
-        <button onClick={() => navigate("/home")}>Back to Home</button>
+        <button className="cocktail-details-back-button" onClick={() => navigate("/home")}>
+          Back to Home
+        </button>
       </main>
     );
   }
@@ -83,9 +85,11 @@ function CocktailDetails() {
   )}`;
 
   return (
-    <main style={{ padding: 24, maxWidth: 1100, margin: "0 auto" }}>
-      <div style={{ marginBottom: 20 }}>
-        <button onClick={() => navigate("/home")}>Back to Home</button>
+    <main className="cocktail-details-page">
+      <div className="cocktail-details-header">
+        <button className="cocktail-details-back-button" onClick={() => navigate("/home")}>
+          Back to Home
+        </button>
       </div>
 
       <section
@@ -152,7 +156,7 @@ function CocktailDetails() {
           </div>
 
           <div style={{ marginTop: 20 }}>
-            <Link to="/home">Go back to cocktail list</Link>
+            {/* <Link to="/home">Go back to cocktail list</Link> */}
           </div>
         </div>
       </section>
