@@ -34,6 +34,7 @@ const cocktailRoutes = require("./routes/cocktails");
 const userRoutes = require("./routes/users");
 const favoriteRoutes = require("./routes/favorites");
 const reviewRoutes = require("./routes/reviews");
+const likeRoutes = require("./routes/likes");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -52,7 +53,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/cocktails", cocktailRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/favorites", favoriteRoutes);
+app.use("/api/comments", reviewRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/likes", likeRoutes);
 
 
 // Test PostgreSQL connection

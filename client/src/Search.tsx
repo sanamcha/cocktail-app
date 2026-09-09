@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 function Search() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const query = searchParams.get("query") || "";
 
   const [cocktails, setCocktails] = useState<any[]>([]);
@@ -47,29 +48,50 @@ function Search() {
   }, [query]);
 
   return (
-    <main>
-      <h1>Search Results</h1>
-      <p>Results for: <strong>{query}</strong></p>
+    <main className="search-page">
+      <div className="search-page__header">
+        <h1>Search Results</h1>
+        <p>
+          Results for: <strong>{query}</strong>
+        </p>
+      </div>
 
-      {loading && <p>Loading cocktails...</p>}
-      {message && <p>{message}</p>}
+      {loading && <p className="search-page__status">Loading cocktails...</p>}
+      {message && <p className="search-page__status">{message}</p>}
 
-      {cocktails.map((cocktail) => (
-        <article key={cocktail.idDrink}>
-          <h2>{cocktail.strDrink}</h2>
-          <p>Category: {cocktail.strCategory}</p>
-          <p>Type: {cocktail.strAlcoholic}</p>
-          <p>{cocktail.strInstructions}</p>
+      {!loading && cocktails.length > 0 && (
+        <section className="search-results-grid">
+          {cocktails.map((cocktail) => (
+            <article
+              key={cocktail.idDrink}
+              className="search-result-card"
+              onClick={() => navigate(`/cocktails/${cocktail.idDrink}`)}
+              style={{ cursor: "pointer" }}
+            >
+              {cocktail.strDrinkThumb && (
+                <img
+                  src={cocktail.strDrinkThumb}
+                  alt={cocktail.strDrink}
+                  className="search-result-card__image"
+                />
+              )}
 
-          {cocktail.strDrinkThumb && (
-            <img
-              src={cocktail.strDrinkThumb}
-              alt={cocktail.strDrink}
-              width="200"
-            />
-          )}
-        </article>
-      ))}
+              <div className="search-result-card__content">
+                <h2>{cocktail.strDrink}</h2>
+                <p>
+                  <strong>Category:</strong> {cocktail.strCategory || "N/A"}
+                </p>
+                <p>
+                  <strong>Type:</strong> {cocktail.strAlcoholic || "N/A"}
+                </p>
+                <p className="search-result-card__instructions">
+                  {cocktail.strInstructions || "No instructions available."}
+                </p>
+              </div>
+            </article>
+          ))}
+        </section>
+      )}
     </main>
   );
 }

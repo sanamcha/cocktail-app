@@ -45,43 +45,49 @@ function RandomCocktail() {
     getRandomCocktail();
   }, []);
 
-  if (loading) return <h2>Loading random cocktail...</h2>;
+  if (loading)
+    return <h2 className="random-cocktail-status">Loading random cocktail...</h2>;
 
-  if (error) return <h2>{error}</h2>;
+  if (error) return <h2 className="random-cocktail-status">{error}</h2>;
 
   return (
-    <main>
-      <h1>🍸 Random Cocktail</h1>
+    <main className="random-cocktail-page">
+      <div className="random-cocktail-card">
+        <h1>🍸 Random Cocktail</h1>
 
-      {cocktail && (
-        <article>
-          <h2>{cocktail.strDrink}</h2>
+        {cocktail && (
+          <article className="random-cocktail-content">
+            <div className="random-cocktail-image-wrap">
+              <img
+                src={cocktail.strDrinkThumb}
+                alt={cocktail.strDrink}
+                className="random-cocktail-image"
+              />
+            </div>
 
-          <img
-            src={cocktail.strDrinkThumb}
-            alt={cocktail.strDrink}
-            width={300}
-          />
+            <div className="random-cocktail-details">
+              <h2>{cocktail.strDrink}</h2>
 
-          <p>
-            <strong>Category:</strong> {cocktail.strCategory}
-          </p>
+              <p>
+                <strong>Category:</strong> {cocktail.strCategory}
+              </p>
 
-          <p>
-            <strong>Type:</strong> {cocktail.strAlcoholic}
-          </p>
+              <p>
+                <strong>Type:</strong> {cocktail.strAlcoholic}
+              </p>
 
-          <p>
-            <strong>Instructions:</strong>
-          </p>
+              <div className="random-cocktail-instructions">
+                <strong>Instructions:</strong>
+                <p>{cocktail.strInstructions}</p>
+              </div>
+            </div>
+          </article>
+        )}
 
-          <p>{cocktail.strInstructions}</p>
-        </article>
-      )}
-
-      <button onClick={getRandomCocktail}>
-        Get Another Random Cocktail
-      </button>
+        <button className="random-cocktail-button" onClick={getRandomCocktail}>
+          Get Another Random Cocktail
+        </button>
+      </div>
     </main>
   );
 }
